@@ -13,8 +13,10 @@ import com.learn.product_service.model.ProductNewResponseDto;
 import com.learn.product_service.repository.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ProductService {
 	
@@ -32,15 +34,22 @@ public class ProductService {
 		if(!productOpt.isEmpty()) {
 			throw new RuntimeException("Product with sku is already saved");
 		}
-		Product product = productRepository.save(
-				productMapper.productNewDtoToProductEntity(productNewRequestDto));
 		
-		productSnsService.publishToSns(product);
+		try {
+			Product product = productRepository.save(
+					productMapper.productNewDtoToProductEntity(productNewRequestDto));
+			
+			productSnsService.publishToSns(product);
+			
+			return ProductNewResponseDto.builder()
+					.sku(product.getSku())
+					.productId(product.getId())
+					.build();
+		}catch (Exception e) {
+			log.error("Error when saving with message {}", e.getMessage(), e);
+			throw new RuntimeException("Error when saving ");
+		}
 		
-		return ProductNewResponseDto.builder()
-				.sku(product.getSku())
-				.productId(product.getId())
-				.build();
 	}
 	
 	public Product findBySku(String sku) {

@@ -22,7 +22,7 @@ public class ProductSnsService {
 	private final SnsClient snsClient;
 	
 	public void publishToSns(Product product) {
-		String message = String.format("Product Created! ID: %d, Name: %s, Price: %s", 
+		String message = String.format("Product Created! ID: %s, Name: %s, Price: %s", 
                 product.getId(), product.getProductName(), product.getPrice());
 
         PublishRequest request = PublishRequest.builder()

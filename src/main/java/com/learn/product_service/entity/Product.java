@@ -9,8 +9,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Table(name = "tbl_product")
@@ -18,6 +20,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 	
 	@Id
@@ -34,13 +38,15 @@ public class Product {
 	@Column(name = "product_category", nullable = false)
 	private String productCategory;
 	
-	@Column(name = "qty")
-	private int qty;
+	@Builder.Default
+	@Column(name = "qty", nullable = false)
+	private int qty = 0;
 	
 	@Column(name = "price")
 	private BigDecimal price;
 	
-	@Column(name = "from_approval")
-	private boolean fromApproval;
+	@Builder.Default
+	@Column(name = "from_approval", nullable = false)
+	private boolean fromApproval = false;
 	
 }

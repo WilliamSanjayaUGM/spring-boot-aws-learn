@@ -12,6 +12,7 @@ public class ProductMapper {
 		return Product.builder()
 				.sku(productNewRequest.getSku())
 				.productName(productNewRequest.getProductName())
+				.productCategory(productNewRequest.getProductCategory())
 				.qty(productNewRequest.getQty())
 				.price(productNewRequest.getPrice())
 				.fromApproval(productNewRequest.isFromApproval())
