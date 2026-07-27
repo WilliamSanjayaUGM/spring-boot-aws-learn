@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.learn.product_service.aws.ProductSnsService;
 import com.learn.product_service.entity.Product;
@@ -28,6 +29,7 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 	
+	@Transactional
 	public ProductNewResponseDto saveNewProduct(ProductNewRequestDto productNewRequestDto) {
 		Optional<Product> productOpt = productRepository.findBySku(productNewRequestDto.getSku());
 		
