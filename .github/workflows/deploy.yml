@@ -40,6 +40,13 @@ jobs:
       - name: Build Maven Project
         run: mvn clean package -DskipTests
 
+      - name: Debug AWS Role ARN
+        run: |
+          echo "Length: ${#ROLE}"
+          echo "$ROLE" | sed 's/./*/g'
+        env:
+          ROLE: ${{ secrets.AWS_ROLE_ARN }}
+
       #################################################
       # Configure AWS
       #################################################
