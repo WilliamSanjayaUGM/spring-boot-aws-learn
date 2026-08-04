@@ -47,6 +47,14 @@ jobs:
         env:
           ROLE: ${{ secrets.AWS_ROLE_ARN }}
 
+      - name: Show OIDC Token Claims
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const token = await core.getIDToken("sts.amazonaws.com");
+            const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+            console.log(payload);
+
       #################################################
       # Configure AWS
       #################################################
